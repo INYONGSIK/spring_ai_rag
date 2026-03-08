@@ -1,0 +1,30 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres
+    username: postgres.prfskcdzokiaforiyaar
+    password: cns20240!@#
+    driver-class-name: org.postgresql.Driver
+
+  ai:
+    openai:
+      api-key: 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
+      chat:
+        options:
+          model: gpt-4.1
+      embedding:
+        options:
+          model: text-embedding-3-small
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+#huggingface:
+#  api-key: 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
+#  embedding-model: BAAI/bge-small-en
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+server:
+  port: 8080

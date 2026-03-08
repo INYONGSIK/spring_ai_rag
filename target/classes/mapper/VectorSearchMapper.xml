@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.rag.mapper.VectorSearchMapper">
+
+ <select id="search" resultType="com.example.rag.dto.DocumentChunk">
+  <![CDATA[
+  SELECT id, content
+  FROM document
+  ORDER BY embedding <-> #{embedding}::vector
+  LIMIT 3
+  ]]>
+ </select>
+
+</mapper>
