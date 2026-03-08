@@ -8,7 +8,7 @@ spring:
 
   ai:
     openai:
-      api-key: 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
+      api-key: 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
       chat:
         options:
           model: gpt-4.1
