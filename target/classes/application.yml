@@ -1,7 +1,6 @@
 
 spring:
-  server:
-    port: 8080
+
 
   datasource:
     url: jdbc:postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres
@@ -11,7 +10,7 @@ spring:
 
   ai:
     openai:
-      api-key: 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
+      api-key: ${OPENAI_API_KEY}
       chat:
         options:
           model: gpt-4.1
@@ -30,4 +29,4 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 
 server:
-  port: 8080
+  port: ${PORT:8080}
