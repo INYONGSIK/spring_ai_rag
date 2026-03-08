@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>RAG Chat</title>
+</head>
+
+<body>
+
+<h2>RAG 질문</h2>
+
+<textarea id="question" rows="5" cols="60"
+placeholder="질문 입력"></textarea>
+
+<br><br>
+
+<button onclick="ask()">질문하기</button>
+
+<h3>답변</h3>
+<div id="answer"></div>
+
+<script>
+async function ask(){
+
+ const question=document.getElementById("question").value;
+
+ const res=await fetch("/rag/ask",{
+  method:"POST",
+  headers:{ "Content-Type":"text/plain"},
+  body:question
+ });
+
+ const text=await res.text();
+
+ document.getElementById("answer").innerText=text;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Document 등록</title>
+</head>
+<body>
+
+<h2>문서 등록</h2>
+
+<textarea id="content" rows="10" cols="80"></textarea>
+
+<br><br>
+
+<button onclick="save()">저장</button>
+
+<script>
+
+    function save(){
+
+        const content = document.getElementById("content").value;
+
+        fetch("/document",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                content:content
+            })
+        })
+            .then(res => {
+
+                if(!res.ok){
+                    throw new Error("저장 실패");
+                }
+
+                return res.text();
+
+            })
+            .then(data => {
+                alert("저장 성공");
+            })
+            .catch(err => {
+                alert("저장 실패");
+                console.error(err);
+            });
+
+    }
+
+
+</script>
+
+</body>
+</html>
