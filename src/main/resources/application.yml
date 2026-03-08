@@ -1,7 +1,7 @@
 
 spring:
   server:
-    port: 8080
+    port: ${PORT:8080}
 
   datasource:
     url: jdbc:postgresql://aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres
