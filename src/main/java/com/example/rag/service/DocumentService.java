@@ -12,21 +12,33 @@ public class DocumentService {
 
     private final EmbeddingModel embeddingModel;
     private final DocumentMapper documentMapper;
+    private final ChunkService chunkService;
 
     public DocumentService(EmbeddingModel embeddingModel,
-                           DocumentMapper documentMapper) {
+                           DocumentMapper documentMapper,
+                           ChunkService chunkService) {
+
         this.embeddingModel = embeddingModel;
         this.documentMapper = documentMapper;
+        this.chunkService = chunkService;
     }
 
     public void save(String content) {
 
-        List<Double> embedding = embeddingModel.embed(content);
+        // 1️⃣ chunk 분리
+        List<String> chunks = chunkService.split(content);
 
-        String vector = embedding.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(",", "[", "]"));
+        // 2️⃣ chunk마다 embedding 생성
+        for (String chunk : chunks) {
 
-        documentMapper.insert(content, vector);
+            List<Double> embedding = embeddingModel.embed(chunk);
+
+            String vector = embedding.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(",", "[", "]"));
+
+            // 3️⃣ DB 저장
+            documentMapper.insert(chunk, vector);
+        }
     }
 }
