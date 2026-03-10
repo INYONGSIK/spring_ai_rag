@@ -16,11 +16,11 @@ public class VectorSearchRepository {
   this.mapper = mapper;
  }
 
- public List<DocumentChunk> search(List<Double> embedding){
+ public List<DocumentChunk> search(List<Double> embedding, String question){
 
   String vector = embedding.toString();
 
-  return mapper.search(vector);
+  return mapper.search(vector, question);
  }
 
 }

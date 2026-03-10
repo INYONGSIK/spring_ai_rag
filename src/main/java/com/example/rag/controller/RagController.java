@@ -31,7 +31,7 @@ public class RagController {
  public String ask(@RequestBody String question){
 
   List<Double> vector = embeddingService.embed(question);
-  List<DocumentChunk> docs = repository.search(vector);
+  List<DocumentChunk> docs = repository.search(vector, question);
 
   return chatService.ask(question,
           docs.stream().map(DocumentChunk::getContent).toList());

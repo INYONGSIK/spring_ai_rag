@@ -11,6 +11,6 @@ import java.util.List;
 @Mapper
 public interface VectorSearchMapper {
 
- List<DocumentChunk> search(@Param("embedding") String embedding);
+ List<DocumentChunk> search(@Param("vector") String vector , @Param("question") String question);
 
 }
