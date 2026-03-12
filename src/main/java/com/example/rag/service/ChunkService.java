@@ -13,7 +13,7 @@ public class ChunkService {
 
     public List<String> split(String text) {
 
-        String[] sentences = text.split("(?<=[.!?])");
+        String[] sentences = text.split("(?<=[.!?])|\\n");
 
         List<String> chunks = new ArrayList<>();
 
@@ -21,9 +21,19 @@ public class ChunkService {
 
         for (String sentence : sentences) {
 
+            sentence = sentence.trim();
+
+            if (sentence.isEmpty()) {
+                continue;
+            }
+
             if (current.length() + sentence.length() > MAX_LENGTH) {
 
-                chunks.add(current.toString());
+                String chunk = current.toString().trim();
+
+                if (!chunk.isEmpty()) {
+                    chunks.add(chunk);
+                }
 
                 String overlap = current.substring(
                         Math.max(0, current.length() - OVERLAP)
@@ -32,11 +42,16 @@ public class ChunkService {
                 current = new StringBuilder(overlap);
             }
 
-            current.append(sentence);
+            current.append(sentence).append(" ");
         }
 
-        if (!current.isEmpty()) {
-            chunks.add(current.toString());
+        if (current.length() > 0) {
+
+            String chunk = current.toString().trim();
+
+            if (!chunk.isEmpty()) {
+                chunks.add(chunk);
+            }
         }
 
         return chunks;

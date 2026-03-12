@@ -4,6 +4,7 @@ package com.example.rag.service;
 
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +22,13 @@ public class ChatService {
 
   String context = String.join("\n", docs);
 
-  return chatClient.prompt()
-   .system("Answer using the provided context")
-   .user("Context:\n" + context + "\nQuestion:\n" + question)
-   .call()
-   .content();
+  ChatResponse response = chatClient.prompt()
+          .system("Answer using the provided context")
+          .user("Context:\n" + context + "\nQuestion:\n" + question)
+          .call()
+          .chatResponse();
+
+  return response.getResult().getOutput().getContent();
  }
 
 }
